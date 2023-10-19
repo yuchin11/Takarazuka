@@ -1,0 +1,65 @@
+<div class="yuchins-top">
+  <h1>宝塚歌劇</h1>
+</div>
+
+<h3>一覧ページ</h3>
+
+<h3>投稿を検索</h3>
+ <%= form_tag({controller:"yuchins",action:"index"}, method: :get) do %>
+   <%= text_field_tag :search %>
+   <%= submit_tag '検索する'  %>
+  <% end %>
+
+<%= link_to "新規投稿へ", new_yuchin_path %>
+<%= link_to "ユーザー編集",  edit_user_registration_path%>
+<%= link_to "診断へ", perfumes_path %>
+
+<div class="yuchins-container">
+ 
+  <% @yuchins.each do |t| %>
+    <div class="yuchin">
+      <%= link_to t.user.name, user_path(t.user.id) %>
+      <%= image_tag t.image_url, size: "250x200" if t.image? %>
+      <%= image_tag t.user.image_url, :style => "border-radius:50%", size: "40x40" if t.user.image? %>
+      <%= t.user.email %>
+      <%= t.kumi %>
+      <%= t.show %>
+      <%= t.price %>
+      <%= t.omoi %>
+      <%= link_to "詳細へ", yuchin_path(t.id) %>
+     
+      <% if user_signed_in? %>
+        <% if current_user.already_liked?(t) %>
+            <%= button_to yuchin_tweet_path(id: t.id, yuchin_id: t.id), method: :delete do %>
+              <i class="fas fa-heart"></i><%= t.tweets.count %>  
+              <p>いいねを取り消す</p><%= t.tweets.count %>
+            <% end %>
+        <% else %>
+            <%= button_to yuchin_tweets_path(id: t.id, yuchin_id: t.id), method: :post do %>
+              <i class="fas fa-heart"></i><%= t.tweets.count %>  
+              <p>いいね</p><%= t.tweets.count %>
+            <% end %>
+          <% end %>
+        <% else %>
+          <p>いいねの数</p><%= t.tweets.count %>
+        <% end %>
+    </div>
+      
+   <div style = 'margin:20px; border:2px double black; width:500px;padding-left:20px;'>
+      
+      <!--- 総合評価の星の部分 ---------->
+      
+        <div>
+          <p>総合評価：
+           <span class="star-rating">
+            <span class="star-rating-front" style="width: <%= getPercent(t.level) %>%;">★★★★★</span>
+            <span class="star-rating-back">★★★★★</span>
+           </span> 
+          </p>
+       </div>
+      
+      <!--- 総合評価の星の部分終わり------->
+   </div>
+  
+  <% end %>
+</div>

@@ -1,0 +1,50 @@
+<%= link_to "診断topに戻る", perfumes_path %>
+
+<%= form_for(@perfume, class: 'form-horizontal', role: 'form') do |f| %>
+    <div class="container-sindan">
+        <div class="row">
+            <div class="col-12">
+                <p>Question1. どちらの舞台にしたい…？</p>
+            </div>
+            <div class="col-6">
+                <p><%= f.check_box :question, {multiple: true}, "1", nil %>情熱にあふれた舞台</p>
+            </div>
+            <div class="col-6">
+                <p><%= f.check_box :question, {multiple: true}, "2", nil %>完成度の高い舞台</p>
+            </div>
+
+            <div class="col-12">
+                <p>Question2. より好きなのは…？</p>
+            </div>
+            <div class="col-6">
+                <p><%= f.check_box :question, {multiple: true}, "1", nil %>歌やダンス</p>
+            </div>
+            <div class="col-6">
+                <p><%= f.check_box :question, {multiple: true}, "2", nil %>お芝居</p>
+            </div>
+
+            <div class="col-12">
+                <p>Question3. どちらの人になりたい…？</p>
+            </div>
+            <div class="col-6">
+                <p><%= f.check_box :question, {multiple: true}, "1", nil %>スタイリッシュでスマート</p>
+            </div>
+            <div class="col-6">
+                <p><%= f.check_box :question, {multiple: true}, "2", nil %>エネルギッシュでフレンドリー</p>
+            </div>
+
+            <div class="col-12">
+                <p>Question4. あなたの性格は…？</p>
+            </div>
+            <div class="col-6">
+                <p><%= f.check_box :question, {multiple: true}, "1", nil %>伝統を重視したい</p>
+            </div>
+            <div class="col-6">
+                <p><%= f.check_box :question, {multiple: true}, "2", nil %>新しいことに挑戦したい</p>
+            </div>
+        </div>
+    </div>
+    <div class="sindanbotan">
+        <%= f.submit "post" %>
+    </div>
+<% end %>

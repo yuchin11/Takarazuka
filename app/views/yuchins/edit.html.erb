@@ -1,0 +1,48 @@
+<h1>宝塚歌劇</h1>
+<h3>投稿編集ページ</h3>
+<%= form_for @yuchin do |f| %>
+   
+    <div class="field">
+    <%= f.label :image %>
+    <%= f.file_field :image %>
+  </div>
+
+# データ型がstringで自由記述の入力フォーム
+  <div class="field">
+    <%= f.label :何組ですか？ %>
+    <%= f.text_field :kumi, :size => 30 %>
+  </div>
+
+# データ型がstringで自由記述の入力フォーム
+  <div class="field">
+    <%= f.label :公演名を教えてください  %>
+    <%= f.text_field :show, :size => 30 %>
+  </div>
+
+# データ型がtextで自由記述の入力フォーム
+  <div class="field">
+    <%= f.label :感想を教えてください %>
+    <%= f.text_area :omoi, :size => "30x2" %>
+  </div>
+  
+  <h5>総合評価</h5>
+   <div class="post_form">
+    <%= f.radio_button :level, 5 ,id: 'star1'%>
+    <label for="star1"><span class="text">最高</span>★</label>
+
+    <%= f.radio_button :level, 4 ,id: 'star2'%>
+    <label for="star2"><span class="text">良い</span>★</label>
+
+    <%= f.radio_button :level, 3 ,id: 'star3'%>
+    <label for="star3"><span class="text">普通</span>★</label>
+
+    <%= f.radio_button :level, 2 ,id: 'star4'%>
+    <label for="star4"><span class="text">悪い</span>★</label>
+
+    <%= f.radio_button :level, 1 ,id: 'star5'%>
+    <label for="star5"><span class="text">最悪</span>★</label>
+</div>
+
+  
+  <%= f.submit "編集する" %>
+<% end %>

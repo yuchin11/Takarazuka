@@ -1,0 +1,23 @@
+<h1>users#show</h1>
+<p>名前 : <%= @user.name %></p>
+<p>メールアドレス : <%= @user.email %></p>
+<p>プロフィール : <%= @user.profile %></p>
+<div class="visitlink">
+  <p>インスタアカウント:<%= link_to 'ここをクリック', @user.instagram %></p>
+</div>
+<% if current_user.id == @user.id %>
+  <%= link_to "編集する", edit_user_registration_path %>
+<% end %>
+
+<h2>ユーザーの投稿一覧</h2>
+<% @user.yuchins.each do |t| %>
+  <%= t.user.name %>
+  <%= t.image %>
+<% end %>
+
+<%= render 'follow_form' %>
+<%= render 'stats' %>
+
+<%= link_to "投稿一覧に戻る", yuchins_path %>
+
+<%= image_tag @user.image_url, size: "250x200" if @user.image? %>

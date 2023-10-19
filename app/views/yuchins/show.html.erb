@@ -1,0 +1,58 @@
+<h1>GeekTwitter</h1>
+<h3>投稿詳細</h3>
+<div class="yuchin">
+<%= link_to @yuchin.user.name, user_path(@yuchin.user.id) %>
+<%= image_tag @yuchin.image_url, size: "250x200" if @yuchin.image? %>
+<%= image_tag @yuchin.user.image_url, :style => "border-radius:50%", size: "40x40" if @yuchin.user.image? %>
+<%= @yuchin.user.email %>
+<%= @yuchin.kumi %>
+<%= @yuchin.show %>
+<%= @yuchin.price %>
+<%= @yuchin.omoi %>
+  <p><%= @yuchin.created_at %></p>
+    <% if user_signed_in? %>
+      <% if current_user.already_liked?(@yuchin) %>
+        <%= button_to yuchin_tweet_path(@yuchin), method: :delete do %>
+            <i class="fas fa-heart"></i><%= @yuchin.tweets.count %>
+            <p>いいねを取り消す</p><%= @yuchin.tweets.count %>
+        <% end %>
+      <% else %>
+        <%= button_to yuchin_tweets_path(@yuchin), method: :post do %>
+            <i class="fas fa-heart"></i><%= @yuchin.tweets.count %>
+            <p>いいね</p><%= @yuchin.tweets.count %>
+        <% end %>
+      <% end %>
+    <% else %>
+        <i class="fas fa-heart"></i><%= @yuchin.tweets.count %>  
+        <p>いいねの数 = </p><%= @yuchin.tweets.count %>
+    <% end %>
+  <%= link_to "編集する", edit_yuchin_path(@yuchin.id) %>
+</div>
+
+<h2>いいねしたユーザー</h2>
+<% @yuchin.liked_users.each do |user| %>
+  <li><%= user.email %></li>
+<% end %>
+
+<div class="comment-wrapper">
+  <p>コメント一覧</p>
+  <% @comments.each do |c| %>
+    <div>
+      <%= c.user.email unless c.user.blank? %>
+      <br>
+      <%= c.content %>
+    </div>
+      <br>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <%= form_with(model: [@yuchin, @comment], local: true) do |f| %>
+      <%= f.text_area :content %>
+      <%= button_tag type: "submit" do %>
+        <i class="far fa-comments"></i> コメントする
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<%= link_to "Tweet一覧に戻る", yuchins_path %>
